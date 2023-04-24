@@ -1,0 +1,21 @@
+{% extends "home.html" %}
+<head>
+    <title>signature</title>
+</head>
+{% block extra_media %}
+{{ form.media }}
+{% endblock %}
+
+{% block body %}
+
+  <form action="" method="post">
+    {% for field in form %}
+    {{ field.label_tag }}
+    {{ field }}
+    <span style="color:red">{{ field.errors }}</span>
+    {% endfor %}
+    <input type="submit" value="Save" class="btn btn-success" />
+    <a href="{% url 'tramites:listar_firmas' %}" class="btn btn-danger">Cancel</a>
+    {% csrf_token %}
+  </form>
+{% endblock %}

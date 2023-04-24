@@ -1,0 +1,33 @@
+{% extends 'home.html' %}
+{% block titulo %}
+    creacion de clientes
+{% endblock titulo %}
+{% block barra %}
+{% endblock barra %}
+{% block body %}
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label >{{ form.cliente_id.label }}</label>
+        <input {{ form.cliente_id }}>
+        <label >{{ form.tramite_id.label }}</label>
+        <input  {{ form.tramite_id }}>
+        <label >{{form.autos.label }}</label>
+        <input  {{ form.autos }}>
+        <button type="submit">Crear</button>
+    </form>
+<body>
+{% endblock body %}
+{% block botonbusqueda %}
+          <!-- Pager -->
+          <div class="clearfix">
+            <a class="btn btn-primary float-right" href="{% url 'tramites:listar_clientes_tramites'%}">Buscar trámites de clientes &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <hr>
+{% endblock botonbusqueda %}

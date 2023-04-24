@@ -1,0 +1,11 @@
+Python -m venv los_millo
+
+los_millo\scripts\activate.bat
+
+python manage.py makemigrations
+
+python manage.py migrate
+
+python manage.py makemigrations <app_name>
+
+python manage.py migrate

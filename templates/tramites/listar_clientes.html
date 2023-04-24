@@ -1,0 +1,101 @@
+{% extends 'home.html' %}
+{% block titulo %}
+    Listado de clientes
+{% endblock titulo %}
+{% block barra %}
+{% endblock barra %}
+
+
+
+{% block body %}
+
+&nbsp
+<div><button style="margin-left: 10px" class="btn btn-outline-dark" type="button" onclick="abrir_modal__creacion('{% url 'tramites:crear__clientes'%}')">Crear nuevo cliente</button>
+&nbsp             
+
+<div class="container">
+    <div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+        <form method="get">
+          {% csrf_token %}
+              <div id ="custom-search-input">
+              <div class="input-group">
+                  <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar.." name="buscar" value="">
+                  <div class="input-group-append">
+                      <button class="btn btn-primary-dark" type="submit">
+                      <i class="fas fa-search fa-sm"></i>
+                      </button>
+                 <div>
+              </div>
+              </div>
+        </form>
+    </div>
+</div>
+</div>
+    {% if clientes %}
+    <table class="table">
+        <thead class="thead-dark">
+            <th scope="col">Nombre del cliente</th>
+            <th scope="col">Código</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Mail</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Eliminar</th>
+        </thead>
+        <tbody>
+            {% for cliente in clientes%}
+            <tr>
+                <td scope="row">{{cliente.nombre_cliente}}</td>
+                <td>{{cliente.id}}</td>
+                <td>{{cliente.telefono_cliente}}</td>
+                <td>{{cliente.mail_cliente}}</td>
+                <td>
+                    <button class="btn btn-dark" type="button" onclick="abrir_modal_edicion('{% url 'tramites:editar_clientes' cliente.id %}')">Editar</a>
+                </td>
+                <td>
+                    <a href="{% url 'tramites:eliminar_clientes' cliente.id %}" button class="btn btn-danger" type="button" data-dismiss = "modal">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <h2>No existen clientes registrados</h2>
+    {% endif %}
+
+
+    <div class="modal fade" id="creacion" role="dialog"> 
+    </div>
+    <div class="modal fade" id="creacion_" role="dialog"> 
+    </div>
+    <div class="modal fade" id="edicion" role="dialog"> 
+    </div>
+    <div class="modal fade" id="buscarclientes" role="dialog"> 
+    </div>
+
+    {% endblock body %}
+
+    {%block extrajs %}
+        <script type="text/javascript">
+            var $ = jQuery.noConflict();
+            function abrir_modal_edicion(url){
+            $('#edicion').load(url, function(){
+                $(this).modal('show');
+            });
+            }
+            function abrir_modal_creacion(url){
+            $('#creacion').load(url, function(){
+                $(this).modal('show');
+            });
+            }
+            function abrir_modal_buscarclientes(url){
+            $('#buscarclientes').load(url, function(){
+                $(this).modal('show');
+            });
+            }
+            function abrir_modal__creacion(url){
+            $('#creacion_').load(url, function(){
+                $(this).modal('show');
+            });
+            }
+            </script>
+    {%endblock extrajs %}

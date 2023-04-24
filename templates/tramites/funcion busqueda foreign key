@@ -1,0 +1,73 @@
+ <div class="container">
+      <div class="row">
+        <div class="col-md-12 search">
+          <form method="get">
+            {% csrf_token %}
+                <div id ="custom-search-input">
+                <div class="input-group col-md-12">
+                    <input type="text" class="form-control" placeholder="Buscar.." name="buscar">
+                    <span class="input-group-list">
+                    <i class="icon icon-search"></i>
+                    <button type="submit" class="boton">Buscar</button>
+                    </span>
+                </div>
+                </div>
+            </form>
+            </div>
+        </div>
+        </div>
+
+def buscar_clientes_tramites(request):
+        busqueda = request.GET.get("buscar")
+        clientes_tramites = Clientes_Tramites.objects.all()
+
+        if busqueda:
+            clientes_tramites = Clientes_Tramites.objects.filter(
+                Q (autos__icontains = busqueda) |
+                Q (cliente_id__nombre_cliente__icontains= busqueda)
+            ).distinct()
+        return render(request, 'tramites/listar_clientes_tramites.html', {'clientes_tramites':clientes_tramites})
+       
+       
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Default checkbox
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+            <label class="form-check-label" for="flexCheckChecked">
+              Checked checkbox
+            </label>
+          </div>
+       
+
+       tabla vieja
+
+       <table>
+        <thead>
+            <th>Nombre del cliente</th>
+            <th>Nombre del trámite</th>
+            <th>Autos</th>
+            <th>Código del trámite</th>
+            <th>Estado del trámite inciado</th>
+            <th>Estado del trámite pendiente</th>
+            <th>Estado del trámite finalizado</th>
+            <th>Editar/Eliminar</th>
+        </thead>
+        <tbody>
+            {% for cliente_tramite in clientes_tramites%}
+            <tr>
+                <td>{{cliente_tramite.cliente_id}}</td>
+                <td>{{cliente_tramite.tramite_id}}</td>
+                <td>{{cliente_tramite.autos}}</td>
+                <td>{{cliente_tramite.id}}</td>
+                <td>{{cliente_tramite.estado_tramite_inciado}}</td>
+                <td>{{cliente_tramite.estado_tramite_pendiente}}</td>
+                <td>{{cliente_tramite.estado_tramite_finalizado}}</td>
+                <td>
+                    <a href="{% url 'tramites:editar_clientes_tramites' cliente_tramite.id %}">Editar</a>
+                    <a href="{% url 'tramites:eliminar_clientes_tramites' cliente_tramite.id %}">Eliminar</a>
+                </td>
+            </tr>

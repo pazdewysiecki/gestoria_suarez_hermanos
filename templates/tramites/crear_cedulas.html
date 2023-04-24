@@ -1,0 +1,64 @@
+{% extends 'home.html' %}
+{% block titulo %}
+    creacion de cédulas
+{% endblock titulo %}
+{% block barra %}
+{% endblock barra %}
+{% block body %}
+</head>
+<body>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Crear cédulas para clientes</h2>
+            </div>
+            <form action="{%url 'tramites:crear_cedulas' %}" method="POST">
+                {% csrf_token %}
+                <div class="modal-body">
+                    {{ form.as_p }}
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'tramites:listar_cedulas'%}" button class="btn btn-danger" type="button" data-dismiss = "modal">Cancelar</a></button>
+                    <button class="btn btn-dark" type="submit">Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+<body>
+{% endblock body %}
+{% block botonbusqueda %}
+{% block botonbusqueda1 %}
+<!-- Pager -->
+<div class="clearfix">
+  <a class="btn btn-primary-dark float-right" href="{% url 'tramites:listar_clientes_tramites'%}">Buscar trámites de clientes &rarr;</a>
+  {% endblock botonbusqueda1 %}
+  {% block botonbusqueda2 %}
+   <a class="btn btn-primary-dark float-left" href="{% url 'tramites:listar_cedulas'%}">Buscar cédulas &rarr;</a>
+   {% endblock botonbusqueda2 %}
+
+{% endblock botonbusqueda %}
+
+<div class="modal fade" id="buscarcedulas" role="dialog"> 
+</div>
+
+
+    {%block extrajs %}
+        <script type="text/javascript">
+            var $ = jQuery.noConflict();
+            function abrir_modal_edicion_cedulas(url){
+            $('#edicion_cedulas').load(url, function(){
+                $(this).modal('show');
+            });
+            }
+            function abrir_modal_creacion_cedulas(url){
+            $('#creacion_cedulas').load(url, function(){
+                $(this).modal('show');
+            });
+            }
+            function abrir_modal_buscarcedulas(url){
+            $('#buscarcedulas').load(url, function(){
+                $(this).modal('show');
+            });
+            }
+            </script>
+    {%endblock extrajs %}

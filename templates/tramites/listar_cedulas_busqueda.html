@@ -1,0 +1,70 @@
+{% extends 'home.html' %}
+{% block titulo %}
+    Búsqueda por fecha de Cédulas
+{% endblock titulo %}
+{% block barra %}
+{% endblock barra %}
+{% block body %}
+&nbsp
+&nbsp
+<form method="POST">
+    {% csrf_token %}
+    <div id ="custom-search-input">
+      <div class="input-group">
+        </div>
+            <label style="margin-left: 10px"  for="fecha_desde">Fecha de creación desde: </label>
+            <input type="date" id="fecha_desde" name="fecha_desde" {% if fecha_desde %} value="{{ fecha_desde }}" {% endif %}>
+        </p>
+      </div>
+      </div>
+        <label style="margin-left: 10px"  for="fecha_hasta">Fecha de creación hasta: </label>
+        <input type="date" id="fecha_hasta" name="fecha_hasta" {% if fecha_hasta %} value="{{ fecha_hasta }}" {% endif %}>
+        </p>
+      </div>
+     <div class="input-group-append">
+    </div>
+    &nbsp   
+    &nbsp   
+      <button style="margin-left: 10px" class="btn btn-danger" type="submit">Filtrar>
+      <i class="fas fa-search fa-sm"></i>
+      </button>
+    &nbsp   
+    &nbsp   
+    </div>
+   <div>
+    &nbsp
+    &nbsp
+</form>
+{% if fecha_cedulas %}
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Casillero</th>
+        <th scope="col">Autos</th>
+        <th scope="col">Código de la cédula</th>
+        <th scope="col">Comentarios adicionales</th>
+        <th scope="col">Fecha de creación</th>
+        <th scope="col">Firma</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for fecha_cedula in fecha_cedulas %}
+      <tr>
+        <th scope="row">{{fecha_cedula.casillero_id}}</td>
+            <td>{{fecha_cedula.autos}}</td>
+            <td>{{fecha_cedula.id}}</td>
+            <td>{{fecha_cedula.comentarios_cedula}}</td>
+            <td>{{fecha_cedula.fecha_creacion}}</td>
+            <td>{{fecha_cedula.firma}}</td>
+        <td>
+        </td>
+        <td>
+        </td>
+      </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <h2>No existen cédulas asociadas a clientes</h2>
+{% endif %}
+{% endblock body %}

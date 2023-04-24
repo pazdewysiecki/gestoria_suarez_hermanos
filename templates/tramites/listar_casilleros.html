@@ -1,0 +1,112 @@
+{% extends 'home.html' %}
+{% block titulo %}
+    Listado de Casilleros
+{% endblock titulo %}
+{% block barra %}
+{% endblock barra %}
+
+{% block body %}
+&nbsp
+<div><button style="margin-left: 10px" class="btn btn-outline-dark" type="button" onclick="abrir_modal__creacioncasillero('{% url 'tramites:crear__casilleros'%}')">Crear casillero</button>
+&nbsp              
+&nbsp              
+&nbsp              
+&nbsp              
+<div class="container">
+    <div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+        <form method="get">
+          {% csrf_token %}
+              <div id ="custom-search-input">
+              <div class="input-group">
+                  <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar.." name="buscar" value="">
+                  <div class="input-group-append">
+                      <button class="btn btn-primary-dark" type="submit">
+                      <i class="fas fa-search fa-sm"></i>
+                      </button>
+                 <div>
+              </div>
+              </div>
+        </form>
+    </div>
+</div>
+</div>
+    {% if casilleros %}
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Nombre del cliente</th>
+            <th scope="col">Código del cliente</th>
+            <th scope="col">Casillero</th>
+            <th scope="col">Vigencia desde</th>
+            <th scope="col">Vigencia hasta</th>
+            <th scope="col">Co-titulares</th>
+            <th scope="col">Autorizados a retirar</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for casillero in casilleros %}
+          <tr>
+            <th scope="row">{{casillero.usuario}}</th>
+            <td>{{casillero.usuario.id}}</td>
+            <td>{{casillero.casillero}}</td>
+            <td>{{casillero.vigencia_desde}}</td>
+            <td>{{casillero.vigencia_hasta}}</td>
+            <td>{{casillero.co_titulares}}</td>
+            <td>{{casillero.autorizados_a_retirar}}</td>
+            <td>{{casillero.precio}}</td>
+            <td>
+                <button class="btn btn-dark" type="button" onclick="abrir_modal_edicioncasillero('{% url 'tramites:editar_casilleros' casillero.casillero %}')">Editar</a>
+            </td>
+            <td>
+                <a href="{% url 'tramites:eliminar_casilleros' casillero.casillero %}" button class="btn btn-danger" type="button" data-dismiss = "modal">Eliminar</a>
+            </td>
+          </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <h2>No existen casilleros asociados a clientes</h2>
+    {% endif %}
+
+    <div class="modal fade" id="creacioncasillero" role="dialog"> 
+    </div>
+    <div class="modal fade" id="creacioncasillero_" role="dialog"> 
+    </div>
+    <div class="modal fade" id="edicioncasillero" role="dialog"> 
+    </div>
+    <div class="modal fade" id="buscarcasillero" role="dialog"> 
+    </div>
+
+{% endblock body %}
+
+
+
+{%block extrajs %}
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+    function abrir_modal_creacioncasillero(url){
+    $('#creacioncasillero').load(url, function(){
+        $(this).modal('show');
+    });
+    }
+    function abrir_modal__creacioncasillero(url){
+    $('#creacioncasillero_').load(url, function(){
+        $(this).modal('show');
+    });
+    }
+    function abrir_modal_edicioncasillero(url){
+    $('#edicioncasillero').load(url, function(){
+        $(this).modal('show');
+    });
+    }
+    function abrir_modal_buscarcasillero(url){
+    $('#buscarcasillero').load(url, function(){
+        $(this).modal('show');
+    });
+    }
+    </script>
+{%endblock extrajs %}
+

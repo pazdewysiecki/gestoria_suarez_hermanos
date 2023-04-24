@@ -1,0 +1,89 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block titulo %}
+    Listado de cédulas por usuario
+{% endblock titulo %}
+{% block barra %}
+{% endblock barra %}
+{% block body %}
+&nbsp
+&nbsp
+<div>
+    <div>
+        <form method="get">
+          {% csrf_token %}
+        </form>
+    </div>
+</div>
+</div>
+    {% if cedulas_usuarios %}
+    &nbsp
+    <table id="lista_usuarios_cedulas" class="thead-dark" style= "width: 75%, " >
+        <thead>
+            <th scope="col">Casillero</th>
+            <th scope="col">Autos</th>
+            <th scope="col">Código de la cédula</th>
+            <th scope="col">Comentarios adicionales</th>
+            <th scope="col">Co-titulares</th>
+            <th scope="col">Autorizados a retirar</th>
+            <th scope="col">Fecha de creación</th>
+
+        </thead>
+        <tbody>
+            {% for cedulas_usuario in cedulas_usuarios %}
+            <tr>
+                <td>{{cedulas_usuario.casillero_id}}</td>
+                <td>{{cedulas_usuario.autos}}</td>
+                <td>{{cedulas_usuario.id}}</td>
+                <td>{{cedulas_usuario.comentarios_cedula}}</td>
+                <td>{{cedulas_usuario.casillero_id.co_titulares}}</th>
+                <td>{{cedulas_usuario.casillero_id.autorizados_a_retirar}}</td>
+                <td>{{cedulas_usuario.fecha_creacion}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <h2>No existen cédulas registradas</h2>
+    {% endif %}
+
+
+    {% endblock body %}
+    {%block extrajs %}
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.5/af-2.3.7/b-2.2.2/date-1.1.2/fc-4.0.2/r-2.2.9/datatables.min.js"></script>
+                <script>
+                    var $ = jQuery.noConflict();
+                    $(document).ready(function(){
+                                $('#lista_usuarios_cedulas').DataTable({
+                                    language: {
+                                            decimal: "",
+                                            emptyTable: "No hay información",
+                                            info: "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                                            infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
+                                            infoFiltered: "(Filtrado de _MAX_ total entradas)",
+                                            infoPostFix: "",
+                                            thousands: ",",
+                                            lengthMenu: "Mostrar _MENU_ Entradas",
+                                            loadingRecords: "Cargando...",
+                                            processing: "Procesando...",
+                                            search: "Buscar:",
+                                            zeroRecords: "Sin resultados encontrados",
+                                            paginate: {
+                                            first: "Primero",
+                                            last: "Ultimo",
+                                            next: "Siguiente",
+                                            previous: "Anterior",
+                                            }
+                                        },
+                                    lengthMenu: [[5,10,50,100],[5,10,50,100]],
+    
+                            })
+                    })
+
+                </script>
+
+
+
+
+    {%endblock extrajs %}

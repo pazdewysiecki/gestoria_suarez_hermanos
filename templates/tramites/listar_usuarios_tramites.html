@@ -1,0 +1,99 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block titulo %}
+    Listado de trámites por usuario
+{% endblock titulo %}
+{% block barra %}
+{% endblock barra %}
+{% block body %}
+&nbsp
+&nbsp
+<div>
+    <div>
+        <form method="get">
+          {% csrf_token %}
+        </form>
+    </div>
+</div>
+</div>
+    {% if clientes_tramites_usuarios %}
+    &nbsp
+    <table id="lista_usuarios_tramites" class="thead-dark" style= "width: 75%, " >
+        <thead>
+            <th scope="col">Nombre del cliente</th>
+            <th scope="col">Código del cliente</th>
+            <th scope="col">Nombre del trámite</th>
+            <th scope="col">Código del trámite</th>
+            <th scope="col">Autos</th>
+            <th scope="col">Estado del trámite iniciado</th>
+            <th scope="col">Estado del trámite finalizado</th>
+            <th scope="col">Estado del trámite anulado</th>
+            <th scope="col">Comentarios adicionales</th>
+            <th scope="col">Fecha de creación</th>
+
+        </thead>
+        <tbody>
+            {% for clientes_tramites_usuario in clientes_tramites_usuarios %}
+            <tr>
+                <th>{{clientes_tramites_usuario.usuario}}</th>
+                <td>{{clientes_tramites_usuario.usuario.id}}</td>
+                <td>{{clientes_tramites_usuario.tramite_id}}</td>
+                <td>{{clientes_tramites_usuario.id}}</td>
+                <td>{{clientes_tramites_usuario.autos}}</td>
+                <td>{{clientes_tramites_usuario.estado_tramite_iniciado}}</td>
+                <td>{{clientes_tramites_usuario.estado_tramite_finalizado}}</td>
+                <td>{{clientes_tramites_usuario.estado_tramite_anulado}}</td>
+                <td>{{clientes_tramites_usuario.comentarios_tramite}}</td>     
+                <td>{{clientes_tramites_usuario.fecha_creacion}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <h2>No existen trámites registrados</h2>
+    {% endif %}
+
+    </div>
+    <div class="modal fade" id="creacionusuariotramite" role="dialog"> 
+    </div>
+
+    {% endblock body %}
+    {%block extrajs %}
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.5/af-2.3.7/b-2.2.2/date-1.1.2/fc-4.0.2/r-2.2.9/datatables.min.js"></script>
+                <script>
+                    var $ = jQuery.noConflict();
+                    $(document).ready(function(){
+                                $('#lista_usuarios_tramites').DataTable({
+                                    language: {
+                                            decimal: "",
+                                            emptyTable: "No hay información",
+                                            info: "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                                            infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
+                                            infoFiltered: "(Filtrado de _MAX_ total entradas)",
+                                            infoPostFix: "",
+                                            thousands: ",",
+                                            lengthMenu: "Mostrar _MENU_ Entradas",
+                                            loadingRecords: "Cargando...",
+                                            processing: "Procesando...",
+                                            search: "Buscar:",
+                                            zeroRecords: "Sin resultados encontrados",
+                                            paginate: {
+                                            first: "Primero",
+                                            last: "Ultimo",
+                                            next: "Siguiente",
+                                            previous: "Anterior",
+                                            }
+                                        },
+                                    lengthMenu: [[5,10,50,100],[5,10,50,100]],
+    
+                            })
+                    })
+
+                </script>
+
+
+
+
+    {%endblock extrajs %}
+

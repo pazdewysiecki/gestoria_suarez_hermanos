@@ -1,0 +1,75 @@
+{% extends 'home.html' %}
+{% block titulo %}
+    Búsqueda por fecha de Trámites de clientes
+{% endblock titulo %}
+{% block barra %}
+{% endblock barra %}
+{% block body %}
+&nbsp
+&nbsp
+<form method="POST">
+    {% csrf_token %}
+    <div id ="custom-search-input">
+      <div class="input-group">
+        </div>
+            <label style="margin-left: 10px" for="fecha_clientes_tramites_desde">Fecha de creación desde:</label>
+            <input type="date" id="fecha_clientes_tramites_desde" name="fecha_clientes_tramites_desde" {% if fecha_clientes_tramites_desde %} value="{{ fecha_clientes_tramites_desde }}" {% endif %}>
+          </p>
+      </div>
+        <label style="margin-left: 10px" for="fecha_clientes_tramites_hasta">Fecha de creación hasta:</label>
+        <input type="date" id="fecha_clientes_tramites_hasta" name="fecha_clientes_tramites_hasta" {% if fecha_clientes_tramites_hasta %} value="{{ fecha_clientes_tramites_hasta }}" {% endif %}>
+      </p>
+      </div>
+     <div class="input-group-append">
+    </div>
+    &nbsp   
+    &nbsp   
+      <button class="btn btn-danger" type="submit">Filtrar>
+      <i class="fas fa-search fa-sm"></i>
+      </button>
+    &nbsp   
+    &nbsp   
+    </div>
+   <div>
+    &nbsp
+    &nbsp
+</form>
+{% if fecha_clientes_tramites %}
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Nombre del cliente</th>
+        <th scope="col">Código del cliente</th>
+        <th scope="col">Nombre del trámite</th>
+        <th scope="col">Autos</th>
+        <th scope="col">Código del trámite</th>
+        <th scope="col">Comentarios adicionales</th>
+        <th scope="col">Fecha de creación</th>
+        <th scope="col">Firma</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for fecha_cliente_tramite in fecha_clientes_tramites %}
+      <tr>
+        <th scope="row">{{fecha_cliente_tramite.usuario}}</th>
+        <td>{{fecha_cliente_tramite.usuario.id}}</td>
+        <td>{{fecha_cliente_tramite.tramite_id}}</td>
+        <td>{{fecha_cliente_tramite.autos}}</td>
+        <td>{{fecha_cliente_tramite.id}}</td>
+        <td>{{fecha_cliente_tramite.comentarios_tramite}}</td>     
+        <td>{{fecha_cliente_tramite.fecha_creacion}}</td>
+        <td>{{fecha_cliente_tramite.firma}}</td>
+        <td>
+        </td>
+        <td>
+        </td>
+      </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <h2>No existen trámites asociados a clientes</h2>
+{% endif %}
+{% endblock body %}
+
+

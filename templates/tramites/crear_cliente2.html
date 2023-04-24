@@ -1,0 +1,66 @@
+{% extends 'home.html' %}
+{% block titulo %}
+    creacion de clientes
+{% endblock titulo %}
+{% block barra %}
+{% endblock barra %}
+{% block body %}
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label >{{ form.nombre_cliente.label }}</label>
+        <input {{ form.nombre_cliente }}>
+        <label >{{ form.telefono_cliente.label }}</label>
+        <input  {{ form.telefono_cliente }}>
+        <label >{{form.mail_cliente.label }}</label>
+        <input  {{ form.mail_cliente }}>
+        <button type="submit">Crear</button>
+    </form>
+<body>
+{% endblock body %}
+{% block botonbusqueda %}
+          <!-- Pager -->
+          <div class="clearfix">
+            <a class="btn btn-primary float-right" href="{% url 'tramites:listar_clientes'%}">Buscar Clientes &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+{% endblock botonbusqueda %}
+
+
+crear_tramites
+
+{% extends 'index.html' %}
+{% block titulo %}
+    creacion de tramites
+{% endblock titulo %}
+{% block barra %}
+{% endblock barra %}
+{% block body %}
+</head>
+<body>
+  <div><button class="btn btn-primary" type="button" onclick="abrir_modal_creartramites('{% url 'tramites:listar_tramites'%}')">Crear un nuevo trámite</button>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label >{{ form.nombre_tramite.label }}</label>
+        <input {{ form.nombre_tramite }}>
+        <label >{{ form.descripcion_tramite.label }}</label>
+        <input  {{ form.descripcion_tramite }}>
+        <button type="submit">Crear</button>
+    </form>
+<body>
+{% endblock body %}
+{% block botonbusqueda2 %}
+          <!-- Pager -->
+          <div class="clearfix">
+            <a class="btn btn-primary float-left" href="{% url 'tramites:listar_tramites'%}">Buscar Tramites &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+{% endblock botonbusqueda2 %}

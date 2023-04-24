@@ -1,0 +1,63 @@
+{% extends 'home.html' %}
+{% block titulo %}
+    Listado de Tramites por cliente
+{% endblock titulo %}
+{% block barra %}
+<div class="container">
+    <div class="row">
+      <div class="col-md-12 search">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div id ="custom-search-input">
+                    <div class="input-group col-md-12">
+                    <input type="text" class="form-control" placeholder="Buscar.." name="buscar">
+                    <span class="input-group-list">
+                        <i class="icon icon-search"></i>
+                        <button type="submit" class="boton">Buscar trámites por cliente</button>
+                    </span>
+                    </div>
+                </div>
+                </form>
+            </div>
+            </div>
+        </div>
+  &nbsp
+  &nbsp
+  &nbsp
+{% endblock barra %}
+
+{% block body %}
+    {% if clientes_tramites %}
+    <table>
+        <thead>
+            <th>Nombre del cliente</th>
+            <th>Nombre del trámite</th>
+            <th>Autos</th>
+            <th>Código del trámite</th>
+            <th>Estado del trámite inciado</th>
+            <th>Estado del trámite pendiente</th>
+            <th>Estado del trámite finalizado</th>
+            <th>Editar/Eliminar</th>
+        </thead>
+        <tbody>
+            {% for cliente_tramite in clientes_tramites%}
+            <tr>
+                <td>{{cliente_tramite.usuario}}</td>
+                <td>{{cliente_tramite.tramite_id}}</td>
+                <td>{{cliente_tramite.autos}}</td>
+                <td>{{cliente_tramite.id}}</td>
+                <td>{{cliente_tramite.estado_tramite_inciado}}</td>
+                <td>{{cliente_tramite.estado_tramite_pendiente}}</td>
+                <td>{{cliente_tramite.estado_tramite_finalizado}}</td>
+                <td>
+                    <a href="{% url 'tramites:editar_clientes_tramites' cliente_tramite.id %}">Editar</a>
+                    <a href="{% url 'tramites:eliminar_clientes_tramites' cliente_tramite.id %}">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <h1>No existen trámites asociados a clientes</h1>
+    {% endif %}
+{% endblock body %}

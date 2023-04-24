@@ -1,0 +1,25 @@
+{% extends "home.html" %}
+{% load jsignature_filters %}
+{% block body %}
+  <h2>Firmas</h2>
+  {% if obj %}
+  <table class="table">
+        {% for obj in object_list %}
+        <li>
+            <dl>
+            <dt>Raw data (from db)</dt>
+            <dd>{{ obj.firma }}</dd>
+            <dt>As image</dt>
+            <dd>
+                <img src="{{  obj.firma|signature_base64 }}" alt="{{ obj }}" />
+            </dd>
+            </dl>
+        </li>
+        {% endfor %}
+    </table>
+    {% else %}
+        <h3>No existen firmas asociadas a clientes</h3>
+    {% endif %}
+  </ul>
+  <a href="{% url 'tramites:listar_firmas'%}" button class="btn btn-danger" type="button" data-dismiss = "modal">Cancelar</a></button>
+{% endblock %}

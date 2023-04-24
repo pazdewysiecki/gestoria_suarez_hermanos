@@ -1,0 +1,75 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block titulo %}
+    Listado de trámites por usuario
+{% endblock titulo %}
+{% block barra %}
+{% endblock barra %}
+{% block body %}
+&nbsp
+&nbsp
+<div>
+    <div>
+        <form method="get">
+          {% csrf_token %}
+        </form>
+    </div>
+</div>
+</div>
+    {% if usuarios %}
+    &nbsp
+    <table id="lista_usuarios_tramites" class="thead-dark" style= "width: 75%, " >
+        <thead>
+            <th scope="col">Nombre del cliente</th>
+            <th scope="col">Código del cliente</th>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <th>{{usuario.cliente_id}}</th>
+                <td>{{usuario.cliente_id.id}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <h2>No existen trámites registrados</h2>
+    {% endif %}
+    {% endblock body %}
+    {%block extrajs %}
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.5/af-2.3.7/b-2.2.2/date-1.1.2/fc-4.0.2/r-2.2.9/datatables.min.js"></script>
+                <script>
+                    var $ = jQuery.noConflict();
+                    $(document).ready(function(){
+                                $('#lista_usuarios_tramites').DataTable({
+                                    language: {
+                                            decimal: "",
+                                            emptyTable: "No hay información",
+                                            info: "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                                            infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
+                                            infoFiltered: "(Filtrado de _MAX_ total entradas)",
+                                            infoPostFix: "",
+                                            thousands: ",",
+                                            lengthMenu: "Mostrar _MENU_ Entradas",
+                                            loadingRecords: "Cargando...",
+                                            processing: "Procesando...",
+                                            search: "Buscar:",
+                                            zeroRecords: "Sin resultados encontrados",
+                                            paginate: {
+                                            first: "Primero",
+                                            last: "Ultimo",
+                                            next: "Siguiente",
+                                            previous: "Anterior",
+                                            }
+                                        },
+                                    lengthMenu: [[5,10,50,100],[5,10,50,100]],
+    
+                            })
+                    })
+
+                </script>
+
+
+    {%endblock extrajs %}
+

@@ -1,0 +1,107 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block titulo %}
+    Listado de usuarios
+{% endblock titulo %}
+{% block barra %}
+{% endblock barra %}
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"/> 
+<link href="{% static 'css/dataTables.bootstrap.min.css' %}" rel="stylesheet" />
+{% endblock extra_css %}
+{% block body %}
+&nbsp
+<div><button style="margin-left: 10px" class="btn btn-outline-dark" type="button" onclick="abrir_modal_creacionusuario('{% url 'usuarios:registrar__usuarios'%}')">Crear nuevo usuario</button>
+&nbsp  
+&nbsp
+&nbsp
+{% csrf_token %}
+&nbsp
+</div>
+&nbsp
+        <table id="lista_usuarios" class="table">
+            <thead>
+                <tr>
+                    <th >#</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+</div>
+<div class="modal fade" id="creacionusuario" role="dialog"> 
+</div>
+<div class="modal fade" id="creacionusuario_" role="dialog"> 
+</div>
+<div class="modal fade" id="edicionusuario" role="dialog"> 
+</div>
+{% endblock body %}
+{%block extrajs %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.5/af-2.3.7/b-2.2.2/date-1.1.2/fc-4.0.2/r-2.2.9/datatables.min.js"></script>
+            <script>
+                var $ = jQuery.noConflict();
+                $(document).ready(function(){
+                    $.ajax({
+                        url: "/usuarios/listar_usuarios/",
+                        type:'GET',
+                        dataType: 'json',
+                        }).done(function(response){
+                            $('#lista_usuarios tbody').html("<div id='lista_usuarios'></div>");
+                            for(let i = 0;i < response.lenght;i++){
+                                let fila = '<tr>';
+                                fila += '</td>' + (i +1) + '</td>';
+                                fila += '</td>' + response [i]["fields"]['username'] + '</td>';
+                                fila += '</td>' + response [i]["fields"]['nombre'] + '</td>';
+                                fila += '</tr>';
+                            $('#lista_usuarios tbody').append(fila);
+                            }
+                            $('#lista_usuarios').DataTable({
+                                language: {
+                                        decimal: "",
+                                        emptyTable: "No hay mucha información",
+                                        info: "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                                        infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
+                                        infoFiltered: "(Filtrado de _MAX_ total entradas)",
+                                        infoPostFix: "",
+                                        thousands: ",",
+                                        lengthMenu: "Mostrar _MENU_ Entradas",
+                                        loadingRecords: "Cargando...",
+                                        processing: "Procesando...",
+                                        search: "Buscar:",
+                                        zeroRecords: "Sin resultados encontrados",
+                                        paginate: {
+                                        first: "Primero",
+                                        last: "Ultimo",
+                                        next: "Siguiente",
+                                        previous: "Anterior",
+                                        }
+                                }
+                        })
+                },)
+                })
+
+            </script>
+            <script type="text/javascript">
+                        var $ = jQuery.noConflict();
+                        function abrir_modal_edicionusuario(url){
+                        $('#edicionusuario').load(url, function(){
+                            $(this).modal('show');
+                        });
+                        }
+                        function abrir_modal_creacionusuario(url){
+                        $('#creacionusuario').load(url, function(){
+                            $(this).modal('show');
+                        });
+                        }
+                        function abrir_modal__creacionusuario(url){
+                        $('#creacionusuario_').load(url, function(){
+                            $(this).modal('show');
+                        });
+                        }
+            </script>
+
+
+{%endblock extrajs %}

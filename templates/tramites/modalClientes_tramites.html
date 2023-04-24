@@ -1,0 +1,17 @@
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Editar Trámites de Clientes: {{ object }}</h2>
+        </div>
+        <form action="{%url 'tramites:editar_clientes_tramites' object.id %}" method="POST">
+            {% csrf_token %}
+            <div class="modal-body">
+                {{ form.as_p }}
+            </div>
+            <div class="modal-footer">
+                <a href="{% url 'tramites:listar_clientes_tramites'%}" button class="btn btn-danger" type="button" data-dismiss = "modal">Cancelar</a></button>
+                <button class="btn btn-dark" type="submit">Confirmar</button>
+            </div>
+        </form>
+    </div>
+</div>
